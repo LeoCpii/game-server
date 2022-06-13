@@ -1,6 +1,7 @@
 import dgram from 'dgram';
 import { EMsg, IData, IPlayer } from './dto';
-import * as ACTION from './actions';
+import Action from './actions';
+import dotenv from 'dotenv';
 
 class Server {
     static readonly PORT = 8081;
@@ -9,6 +10,7 @@ class Server {
     static socket = dgram.createSocket('udp4');
 
     constructor() {
+        dotenv.config();
         this.on();
         Server.socket.bind(8081, () => this.print());
     }
@@ -17,14 +19,14 @@ class Server {
         Server.socket.on('message', (msg, rinfo) => {
             Server.data = JSON.parse(String(msg));
             const fn = EMsg[Server.data.type];
-            ACTION[fn](Server.data, Server.hosts);
+            Action[fn](Server.data, Server.hosts);
             this.send(Server.data, rinfo);
         });
     }
 
     private send(data: IData, rinfo: dgram.RemoteInfo) {
         Server.socket.send(JSON.stringify(data), rinfo.port, rinfo.address);
-        console.log(Server.hosts);
+        console.table(Server.hosts);
     }
 
     private print() {

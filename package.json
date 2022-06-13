@@ -4,13 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node dist/index.js",
+    "serve": "node dist/index.js",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "lint": "eslint . --ext .ts --fix"
   },
   "dependencies": {
-    "dgram": "^1.0.1"
+    "dgram": "^1.0.1",
+    "dotenv": "^16.0.1"
   },
   "devDependencies": {
     "@types/node": "^17.0.42",
