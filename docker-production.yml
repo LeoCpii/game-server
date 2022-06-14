@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: "traefik:v2.5"
+    container_name: "traefik"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=thiagofn.1997@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  prop-hunt-2d-server:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prop-hunt-2d-server.rule=Host(`ec2-3-86-250-91.compute-1.amazonaws.com`)"
+      - "traefik.http.routers.prop-hunt-2d-server.entrypoints=websecure"
+      - "traefik.http.routers.prop-hunt-2d-server.tls.certresolver=myresolver"

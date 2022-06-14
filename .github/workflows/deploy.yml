@@ -1,0 +1,62 @@
+name: CD
+
+on:
+  push:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create AWS SDK config json file
+        run: |
+          mkdir src/aws-sdk
+          echo "${{ secrets.AWS_SDK_CONFIG }}" | base64 --decode > src/aws-sdk/config.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run build
+        run: npm run build
+
+      - name: Delete build and packages
+        run: |
+          rm -r node_modules
+          rm -r dist
+
+      - name: Create AWS SSH key
+        run: |
+          echo "${{ secrets.AWS_EC2_SSH_KEY_PAIR }}" > aws02_ec2_key_pair.pem
+          chmod 400 aws02_ec2_key_pair.pem
+
+      - name: Add AWS IP to known hosts
+        run: |
+          mkdir ~/.ssh
+          touch ~/.ssh/known_hosts
+          ssh-keyscan -H ec2-3-86-250-91.compute-1.amazonaws.com >> ~/.ssh/known_hosts
+
+      - name: Deploy to AWS
+        run: |
+          ssh -i aws02_ec2_key_pair.pem ubuntu@ec2-3-86-250-91.compute-1.amazonaws.com "sudo rm -rf prop-hunt-2d-server"
+          scp -r -i aws02_ec2_key_pair.pem /home/runner/work/prop-hunt-2d-server/prop-hunt-2d-server ubuntu@ec2-3-86-250-91.compute-1.amazonaws.com:~/
+          ssh -i aws02_ec2_key_pair.pem ubuntu@ec2-3-86-250-91.compute-1.amazonaws.com "cd prop-hunt-2d-server && docker-compose -f docker-compose.yml -f docker-production.yml up --build -d"
+
+  notify:
+    needs: [ deploy ]
+
+    runs-on: ubuntu-latest
+
+    continue-on-error: true
+
+    steps:
+      - name: Succeeded
+        if: ${{ success() }}
+        uses: LeoCpii/discord-webhook-alert@master
+        with:
+          webhookUrl: ${{ secrets.DEPLOY_WEBHOOK }}
+          type: success
