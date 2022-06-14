@@ -4,7 +4,7 @@ import Action from './actions';
 import dotenv from 'dotenv';
 
 class Server {
-    static readonly PORT = 443;
+    static readonly PORT = 8080;
     static data: IData;
     static hosts: Array<IPlayer[]> = [];
     static socket = dgram.createSocket('udp4');
@@ -31,7 +31,7 @@ class Server {
 
     private print() {
         console.log('------------------------------------');
-        console.log(`🚀 Server is running on port, PLIEASE ${Server.PORT} 🚀`);
+        console.log(`🚀 Server is running on port, PLEASE ${Server.PORT} 🚀`);
         console.log('------------------------------------');
     }
 }
