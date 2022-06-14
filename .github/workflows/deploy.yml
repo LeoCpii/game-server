@@ -13,11 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Create AWS SDK config json file
-        run: |
-          mkdir src/aws-sdk
-          echo "${{ secrets.AWS_SDK_CONFIG }}" | base64 --decode > src/aws-sdk/config.json
-
       - name: Install dependencies
         run: npm install
 
