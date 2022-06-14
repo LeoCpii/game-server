@@ -39,7 +39,7 @@ jobs:
         run: |
           ssh -i aws02_ec2_key_pair.pem ubuntu@ec2-3-86-250-91.compute-1.amazonaws.com "sudo rm -rf game-server"
           scp -r -i aws02_ec2_key_pair.pem /home/runner/work/game-server/game-server ubuntu@ec2-3-86-250-91.compute-1.amazonaws.com:~/
-          ssh -i aws02_ec2_key_pair.pem ubuntu@ec2-3-86-250-91.compute-1.amazonaws.com "cd game-server && docker-compose -f docker-compose.yml -f docker-production.yml up --build -d"
+          ssh -i aws02_ec2_key_pair.pem ubuntu@ec2-3-86-250-91.compute-1.amazonaws.com "cd game-server && docker-compose -f docker-compose.yml up --build -d"
 
   notify:
     needs: [ deploy ]
