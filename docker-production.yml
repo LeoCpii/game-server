@@ -13,7 +13,7 @@ services:
       - "--certificatesresolvers.myresolver.acme.email=thiagofn.1997@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
-      - "1704:1704"
+      - "1704:1704/udp"
       - "8080:8080"
     volumes:
       - "./letsencrypt:/letsencrypt"
