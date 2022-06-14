@@ -31,7 +31,7 @@ class Server {
 
     private print() {
         console.log('------------------------------------');
-        console.log(`🚀 Server is running on port ${Server.PORT} 🚀`);
+        console.log(`🚀 Server is running on port, PLIEASE ${Server.PORT} 🚀`);
         console.log('------------------------------------');
     }
 }
