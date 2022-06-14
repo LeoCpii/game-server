@@ -4,7 +4,7 @@ import Action from './actions';
 import dotenv from 'dotenv';
 
 class Server {
-    static readonly PORT = 8080;
+    static readonly PORT = process.env.PORT || 8080;
     static data: IData;
     static hosts: Array<IPlayer[]> = [];
     static socket = dgram.createSocket('udp4');
@@ -12,7 +12,7 @@ class Server {
     constructor() {
         dotenv.config();
         this.on();
-        Server.socket.bind(Server.PORT, () => this.print());
+        Server.socket.bind(Number(Server.PORT), () => this.print());
     }
 
     private on() {
