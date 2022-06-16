@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  prop-hunt-2d-server:
+    image: prop-hunt-2d-server
+    build: .
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    ports:
+      - 3000:3000/udp
