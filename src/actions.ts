@@ -11,6 +11,9 @@ class Action {
         hosts[data.host][data._id].key.right = data.key.right;
         hosts[data.host][data._id].coordinate.x = data.coordinate.x;
         hosts[data.host][data._id].coordinate.y = data.coordinate.y;
+        hosts[data.host][data._id].skin.face = data.skin.face;
+        hosts[data.host][data._id].skin.glasses = data.skin.glasses;
+        hosts[data.host][data._id].skin.hat = data.skin.hat;
     }
 
     @log()
