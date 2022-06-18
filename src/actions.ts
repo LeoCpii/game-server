@@ -5,15 +5,10 @@ import { log } from './log';
 class Action {
     @log()
     public SET_PLAYER_STAT(data: IData, hosts: Array<IPlayer[]>) {
-        hosts[data.host][data._id].key.up = data.key.up;
-        hosts[data.host][data._id].key.down = data.key.down;
-        hosts[data.host][data._id].key.left = data.key.left;
-        hosts[data.host][data._id].key.right = data.key.right;
-        hosts[data.host][data._id].coordinate.x = data.coordinate.x;
-        hosts[data.host][data._id].coordinate.y = data.coordinate.y;
-        hosts[data.host][data._id].skin.face = data.skin.face;
-        hosts[data.host][data._id].skin.glasses = data.skin.glasses;
-        hosts[data.host][data._id].skin.hat = data.skin.hat;
+        hosts[data.host][data._id].key = data.key;
+        hosts[data.host][data._id].coordinate = data.coordinate;
+        hosts[data.host][data._id].skin = data.skin;
+        hosts[data.host][data._id].equipment = data.equipment;
     }
 
     @log()
@@ -22,7 +17,7 @@ class Action {
     }
 
     @log()
-    public GET_NEW_PLAYERS(data: IData, hosts: Array<IPlayer[]>) {
+    public GET_PLAYERS_FROM_SERVER(data: IData, hosts: Array<IPlayer[]>) {
         data.players = hosts[data.host];
     }
 

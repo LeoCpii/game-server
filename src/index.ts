@@ -26,7 +26,10 @@ class Server {
 
     private send(data: IData, rinfo: dgram.RemoteInfo) {
         Server.socket.send(JSON.stringify(data), rinfo.port, rinfo.address);
-        console.table(Server.hosts);
+
+        if (['true'].includes(String(process.env.DEBUG))) {
+            console.table(Server.hosts);
+        }
     }
 
     private print() {

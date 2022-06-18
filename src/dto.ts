@@ -12,6 +12,7 @@ export interface IData {
     x: number;
     y: number;
     player_stat: any;
+    equipment: IEquipment;
     coordinate: ICoordinate;
     key: IKey;
     skin: ISkin;
@@ -22,6 +23,7 @@ export interface IPlayer {
     coordinate: ICoordinate;
     key: IKey;
     skin: ISkin;
+    equipment: IEquipment
 }
 
 export interface ICoordinate {
@@ -42,6 +44,10 @@ export interface ISkin {
     glasses: number;
 }
 
+export interface IEquipment {
+    gun: number;
+}
+
 export enum EMsg {
     CREATE_HOST,
     JOIN_HOST,
@@ -49,5 +55,5 @@ export enum EMsg {
     SET_PLAYER_STAT,
     GET_PLAYER_STAT,
     GET_HOSTS,
-    GET_NEW_PLAYERS
+    GET_PLAYERS_FROM_SERVER
 }

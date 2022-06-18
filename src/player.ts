@@ -1,16 +1,18 @@
-import { ICoordinate, IKey, IPlayer, ISkin } from './dto';
+import { ICoordinate, IEquipment, IKey, IPlayer, ISkin } from './dto';
 
 export class Player implements IPlayer {
     public _id: number;
     public coordinate: ICoordinate;
     public key: IKey;
     public skin: ISkin;
+    public equipment: IEquipment;
 
     constructor(data: IPlayer) {
         this._id = data._id;
         this.coordinate = data.coordinate;
         this.key = data.key;
         this.skin = data.skin;
+        this.equipment = data.equipment;
     }
 }
 
@@ -30,5 +32,8 @@ export const new_instance_player = (id = 0): IPlayer => ({
         hat: 0,
         face: 0,
         glasses: 0
+    },
+    equipment: {
+        gun: 0
     }
 });
